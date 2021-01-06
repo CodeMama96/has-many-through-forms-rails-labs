@@ -1,0 +1,7 @@
+<h1> All the Posts to This Category!</h1>
+
+
+<% @categories.each do |c|%>
+    <%= link_to c.name, category_path(c) %>
+    <%= c.post.title %>
+    <% end %>
