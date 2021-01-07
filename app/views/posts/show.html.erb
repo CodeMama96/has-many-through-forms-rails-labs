@@ -2,6 +2,41 @@
 
 <h2><%=@post.title%></h2>
 <h2><%=@post.content%></h2>
+<ul>
+<% @post.comments.each do |p| %>
+<li> <%= "#{p.user.username} says: #{p.content}" %></li>
+    <% end %>
+</ul>
 
+<h3> Category Name </h3>
+<ul>
+<% @post.categories.each do |p| %>
+<li> <%= p.name %></li>
+    <% end %>
+</ul>
 
+<h3>List of Users</h3>
+<ul>
+<% @post.users.uniq.each do |f| %>
+<li> <%= link_to f.username, user_path(f)%> </li>
+<% end %>
+</ul>
 
+<hr>
+<%= form_for(@comment) do |f| %>
+    <%= f.label(:content) %>
+    <%= f.text_field :content %>
+    <%= f.hidden_field :post_id, value: @post.id %>
+    <h3> Select A User </h3>
+
+    <%= f.collection_select :user_id, User.all, :id, :username %>
+    
+<h3> Create User </h3>
+    <%= f.fields_for :user do |u| %>
+        <%= u.label "Username" %>
+        <%= u.text_field :username %>
+        <%= u.label "Email" %>
+        <%= u.email_field :email %>
+    <% end %> 
+    <br><br><%=f.submit%>
+<% end%>

@@ -5,5 +5,10 @@
     <%= p.text_field :title %>
     <%= p.label(:content) %>
     <%= p.text_field :content %>
+    <%= p.collection_check_boxes :category_ids, Category.all, :id, :name %>
+    <%= p.fields_for :categories do |u| %>
+        <%= u.label "Name" %>
+        <%= u.text_field :name %>
+    <% end %> 
     <%= p.submit %>
 <% end %>
